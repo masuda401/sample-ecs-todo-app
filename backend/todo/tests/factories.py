@@ -8,5 +8,6 @@ class TodoFactory(factory.django.DjangoModelFactory):
         model = Todo
 
     id = 1
-    title = 'APIを実装'
-    description = 'Todoを取得するAPIを実装する'
+    title = 'Implement API'
+    description = 'Implement an API to retrieve Todo'
+    status = 0

@@ -12,8 +12,8 @@ from todo.views import TodoViewSet
 @pytest.mark.freeze_time(datetime.datetime(2022, 8, 11, 9, 0, 0, tzinfo=zoneinfo.ZoneInfo('Asia/Tokyo')))
 @pytest.mark.django_db
 def tests_should_get_two_todos():
-    TodoFactory()
-    TodoFactory(id=2, title='コードレビュー', description='プルリク#1をレビューする')
+    TodoFactory(status=1)
+    TodoFactory(id=2, title='Code Review', description='Review Pull Request #1')
 
     client = APIRequestFactory()
     todo_list = TodoViewSet.as_view({'get': 'list'})
@@ -26,14 +26,16 @@ def tests_should_get_two_todos():
     assert json.loads(response.content) == [
         {
             'id': 2,
-            'title': 'コードレビュー',
-            'description': 'プルリク#1をレビューする',
+            'title': 'Code Review',
+            'description': 'Review Pull Request #1',
+            'status': 0,
             'created_at': '2022-08-11T09:00:00+09:00'
         },
         {
             'id': 1,
-            'title': 'APIを実装',
-            'description': 'Todoを取得するAPIを実装する',
+            'title': 'Implement API',
+            'description': 'Implement an API to retrieve Todo',
+            'status': 1,
             'created_at': '2022-08-11T09:00:00+09:00'
         }
     ]
